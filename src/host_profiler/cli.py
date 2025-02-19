@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from typing import List
 from .profile import profile
 from .collate import collate
+from .db import install_db, list_db
 
 __softwarename__ = "human-profiler"
 __default_data_dir__ = f'{sys.base_prefix}/share/{__softwarename__}/'
@@ -109,6 +110,18 @@ def main():
 
     parser_sub.set_defaults(func=collate)
 
+    ### new subparser for install_db ###
+    parser_sub = subparsers.add_parser('install-db', help='Install a host-profiler database from a compressed file', formatter_class=ArgumentDefaultsRichHelpFormatter)
+    parser_sub.add_argument('--archive',type=str,help='Path to the compressed file to install',required = True)
+    parser_sub.add_argument('--db_dir',type=os.path.abspath,default=__default_data_dir__,help='Storage directory')
+    parser_sub.add_argument('--temp',help="Temp firectory to process all files",type=str,default=".")
+    parser_sub.set_defaults(func=install_db)
+
+    ### new subparser for install_db ###
+    parser_sub = subparsers.add_parser('list-db', help='Install a host-profiler database from a compressed file', formatter_class=ArgumentDefaultsRichHelpFormatter)
+    parser_sub.add_argument('--db_dir',type=os.path.abspath,default=__default_data_dir__,help='Storage directory')
+    parser_sub.set_defaults(func=list_db)
+
     args = parser.parse_args()
 
     logging.basicConfig(
@@ -117,7 +130,9 @@ def main():
 
     if hasattr(args, 'func'):
         args.software_version = hp.__version__
-        args.tmp_prefix = 'xxxxx'
+        args.tmp_prefix = str(uuid4())
+        if not hasattr(args, 'temp'):
+            args.temp = os.environ.get('TMPDIR', '/tmp')
         args.files_prefix = f"{args.temp}/{args.tmp_prefix}"
         args.func(args)
     else:
