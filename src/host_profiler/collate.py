@@ -119,7 +119,7 @@ def collate(args: argparse.Namespace):
                     "filter":'reference' if int(depth[gpos][s]) >= args.min_depth else 'depth_fail',
                     "type": v['type'],
                     "genotype": 0 if int(depth[gpos][s]) >= args.min_depth else 'NA',
-                    "description": v['description'],
+                    "description": v.get('description',None),
                 })
 
     df = pd.DataFrame(variant_rows)
