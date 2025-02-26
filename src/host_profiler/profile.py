@@ -2,7 +2,7 @@ import argparse
 import pathogenprofiler as pp
 from .reformat import get_result
 import host_profiler as hp
-
+import shutil
 
 def profile(args:argparse.Namespace):
     args.conf = pp.get_db(db_dir=args.db_dir, db_name = args.db)
@@ -28,3 +28,6 @@ def profile(args:argparse.Namespace):
 
     
     open(f"{args.dir}/{args.prefix}.json","w").write(result.model_dump_json(indent=4))
+
+    for extension in ['.bam','.targets_for_profile.csq.vcf.gz']:
+        shutil.move(f"{args.dir}/{args.prefix}{extension}",f"{args.dir}/{args.prefix}{extension}")
