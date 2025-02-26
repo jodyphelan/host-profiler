@@ -106,7 +106,7 @@ def collate(args: argparse.Namespace):
                     "sample_id": s,
                     "chrom":gpos[0],
                     "pos": gpos[1],
-                    "db-snp-id": v['db-snp-id'],
+                    "db-snp-id": v.get('db-snp-id',None),
                     "gene_name":v['gene_name'],
                     "gene_id": v['gene_id'],
                     "change": v['change'],
