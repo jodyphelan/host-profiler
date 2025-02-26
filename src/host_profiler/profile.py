@@ -30,6 +30,6 @@ def profile(args:argparse.Namespace):
     open(f"{args.dir}/{args.prefix}.results.json","w").write(result.model_dump_json(indent=4))
 
     for extension in ['.bam','.targets_for_profile.csq.vcf.gz']:
-        shutil.move(f"{args.dir}/{args.prefix}{extension}",f"{args.dir}/{args.prefix}{extension}")
+        shutil.move(f"{args.files_prefix}{extension}",f"{args.dir}/{args.prefix}{extension}")
 
     pp.run_cmd(f"rm {args.files_prefix}*")
