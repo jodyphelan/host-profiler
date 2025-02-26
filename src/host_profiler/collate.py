@@ -44,7 +44,7 @@ def collate(args: argparse.Namespace):
             var['genotype'] = None if var['filter'] == "soft_fail" else 1
             for ann in var['annotation']:
                 var.update(ann)
-            variant_rows.append({f:var[f] for f in fields})
+            variant_rows.append({f:var.get(f,None) for f in fields})
             variant_info[var['gene_name'],var['change']] = var
 
     df = pd.DataFrame(variant_rows)
