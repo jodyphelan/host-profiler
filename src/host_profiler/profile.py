@@ -31,3 +31,5 @@ def profile(args:argparse.Namespace):
 
     for extension in ['.bam','.targets_for_profile.csq.vcf.gz']:
         shutil.move(f"{args.dir}/{args.prefix}{extension}",f"{args.dir}/{args.prefix}{extension}")
+
+    pp.run_cmd(f"rm {args.files_prefix}*")
