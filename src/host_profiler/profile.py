@@ -28,7 +28,7 @@ def profile(args:argparse.Namespace):
 
     
     open(f"{args.dir}/{args.prefix}.results.json","w").write(result.model_dump_json(indent=4))
-
+    print(args.files_prefix)
     files_to_keep = {
         f'{args.files_prefix}.bam':f"{args.dir}/{args.prefix}.bam",
         f'{args.files_prefix}.targets_for_profile.csq.vcf.gz':f"{args.dir}/{args.prefix}.vcf.gz"
